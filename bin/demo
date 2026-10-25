@@ -1,0 +1,65 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Runs the throwaway Redmine this theme is developed and checked in.
+#
+#   ruby bin/demo up        start it, load the demo data once, switch the theme on
+#   ruby bin/demo theme ID  switch to a theme folder by name, or "default" for Redmine's own look
+#   ruby bin/demo restart   restart Redmine (after adding a theme folder)
+#   ruby bin/demo down      stop it, keep the data
+#   ruby bin/demo reset     stop it and wipe the data
+#
+# REDMINE_TAG picks the Redmine version (7.0.2 or 7.0); the default is 7.0.2.
+require "json"
+require "net/http"
+
+ROOT = File.expand_path("..", __dir__)
+CONFIG = JSON.parse(File.read(File.join(ROOT, "test", "config.json")))
+READY_SECONDS = 240
+
+def compose(*arguments)
+  system("docker", "compose", *arguments, chdir: ROOT) || abort("docker compose #{arguments.join(' ')} failed")
+end
+
+# rails runner takes a file path or a piece of Ruby as its one argument.
+def runner(code_or_path)
+  compose("exec", "-T", "redmine", "bin/rails", "runner", code_or_path)
+end
+
+def wait_until_ready
+  uri = URI("http://localhost:#{CONFIG.fetch('port')}/login")
+  deadline = Time.now + READY_SECONDS
+  loop do
+    begin
+      return puts("Redmine is up at #{uri.host}:#{uri.port}") if Net::HTTP.get_response(uri).code == "200"
+    rescue SystemCallError, EOFError, Net::ReadTimeout
+      nil
+    end
+    abort("Redmine did not answer within #{READY_SECONDS} seconds") if Time.now > deadline
+    sleep 3
+  end
+end
+
+def switch_theme(id)
+  value = id == "default" ? "" : id
+  runner("Setting.ui_theme = #{value.inspect}; puts \"theme: \#{Setting.ui_theme.inspect}\"")
+end
+
+case ARGV.first
+when "up"
+  compose("up", "-d")
+  wait_until_ready
+  runner("/usr/src/redmine/seed.rb")
+  switch_theme(CONFIG.fetch("theme"))
+when "theme"
+  switch_theme(ARGV.fetch(1) { abort("usage: ruby bin/demo theme ID|default") })
+when "restart"
+  compose("restart", "redmine")
+  wait_until_ready
+when "down"
+  compose("down")
+when "reset"
+  compose("down", "-v")
+else
+  abort(File.read(__FILE__)[/\A#!.*?\n\n((?:#.*\n)+)/m, 1].to_s.gsub(/^# ?/, ""))
+end

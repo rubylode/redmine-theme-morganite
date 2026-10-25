@@ -1,0 +1,38 @@
+/* Morganite, a theme for Redmine 7
+ * Copyright (C) 2026  Nick Gorbikoff
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA. */
+
+@import url(/application.css);
+
+/* 1. Light tokens.
+ * Redmine 7 takes its colours from the Open Color palette (--oc-gray-0 to -9, and the same ramps for each hue, each with an
+ * -rgb twin) plus a few --color-* names. Remapping those variables recolours most of the application. */
+:root {
+}
+
+/* 2. Dark tokens, from the system setting. Designed, not inverted: surfaces get lighter as they rise. */
+@media (prefers-color-scheme: dark) {
+  :root {
+  }
+}
+
+/* 3. Layout shell: header, menus, sidebar. */
+
+/* 4. Issues: the list, the issue page, history. */
+
+/* 5. Forms, buttons, flash messages, context menu, login. */
+
+/* 6. Everything else follows from the tokens. Fix only what is clearly broken. */
