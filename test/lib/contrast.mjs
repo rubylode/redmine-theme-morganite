@@ -51,6 +51,7 @@ export function auditContrast() {
     const layers = []
     for (let node = element; node; node = node.parentElement) {
       const style = getComputedStyle(node)
+      if (style.display === "contents") continue // paints nothing, so its background is not behind anything
       if (style.backgroundImage !== "none") return null
       const color = parseColor(style.backgroundColor)
       if (color[3] > 0) layers.push(color)

@@ -1,6 +1,6 @@
 # A throwaway Redmine 7 to develop and check the theme in. Not a real tracker.
 # Start: ruby bin/demo up, then open http://localhost:3101 (admin / admin).
-# The theme folder is mounted, so a CSS change shows after a reload. Wipe it: ruby bin/demo reset.
+# The theme folder is mounted, but Redmine caches its assets: after a CSS change run ruby bin/demo restart, then reload. Wipe it: ruby bin/demo reset.
 # REDMINE_TAG picks the Redmine version, for example 7.0.2 or 7.0.
 services:
   redmine:

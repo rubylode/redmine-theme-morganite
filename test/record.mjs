@@ -47,7 +47,8 @@ for (const colorScheme of schemes.filter((scheme) => !onlyScheme || scheme === o
   await glide(page.locator("table.issues tbody tr").nth(6)); await pause(900)
 
   // 3. Open the first issue and scroll through it.
-  await glide(page.locator("table.issues td.subject a").first()); await page.locator("table.issues td.subject a").first().click()
+  const showcase = page.locator("table.issues td.subject a", { hasText: "Tiles near the poles" }).first()
+  await glide(showcase); await showcase.click()
   await page.waitForSelector("div.issue"); await pause(1800)
   await page.mouse.wheel(0, 500); await pause(1400)
   await page.mouse.wheel(0, 700); await pause(1400)

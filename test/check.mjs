@@ -1,5 +1,5 @@
 // The page check. Loads every page of pages.json on the demo Redmine in light and dark, at desktop and phone width, and fails on:
-// a console error, a failed request, sideways scrolling, or text below WCAG AA contrast (desktop width only).
+// a console error, a failed request, sideways scrolling, or text below WCAG AA contrast.
 // Pages marked "gate": false are reported but never fail the run.
 //
 //   npm run check                      all pages, both colour schemes
@@ -35,7 +35,7 @@ for (const colorScheme of selectedSchemes) {
       await page.goto(`${baseUrl}${entry.path}`, { waitUntil: "load" })
       await page.waitForLoadState("networkidle").catch(() => {})
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
-      const contrast = size.name === "desktop" ? await page.evaluate(auditContrast) : null
+      const contrast = await page.evaluate(auditContrast)
       results.push({ page: entry.name, gate: entry.gate, scheme: colorScheme, size: size.name, problems, overflow: Math.max(0, overflow), contrast })
       await page.close()
     }
