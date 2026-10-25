@@ -6,4 +6,4 @@ All notable changes to this theme. The format follows [Keep a Changelog](https:/
 
 ### Added
 
-- The theme skeleton, the demo Redmine, the page check, the screenshot script and the recorder.
+- The theme skeleton (a stylesheet, no script), the demo Redmine, the page check, the screenshot script and the recorder.

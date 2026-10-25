@@ -2,7 +2,7 @@
 
 Peach and coral on white, with airy list rows and soft shadows.
 
-A theme for Redmine 7 and up. Light and dark, following your system setting. It is CSS and a small script, with no plugin and
+A theme for Redmine 7 and up. Light and dark, following your system setting. It is CSS only, with no script, no plugin and
 no change to Redmine itself.
 
 <!-- Screenshots and the recording go here once the theme is built:
