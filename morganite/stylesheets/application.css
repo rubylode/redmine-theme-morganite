@@ -21,18 +21,366 @@
  * Redmine 7 takes its colours from the Open Color palette (--oc-gray-0 to -9, and the same ramps for each hue, each with an
  * -rgb twin) plus a few --color-* names. Remapping those variables recolours most of the application. */
 :root {
+  --fonts-main: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+
+  /* Warm neutrals. Light steps (0 to 4) are surfaces and borders, dark steps (5 to 9) are text. */
+  --oc-gray-0: #fcfbfa;
+  --oc-gray-1: #f7f5f3;
+  --oc-gray-2: #f0ede9;
+  --oc-gray-3: #e7e3de;
+  --oc-gray-4: #e3ded9;
+  --oc-gray-5: #7a726d;
+  --oc-gray-6: #6b635f;
+  --oc-gray-7: #544d49;
+  --oc-gray-8: #3a3532;
+  --oc-gray-9: #231f1d;
+  --oc-gray-9-rgb: 35, 31, 29;
+
+  /* Coral replaces the blue and indigo ramps: links, selected items, focus. Step 7 is the text colour (5.3 to 1 on white). */
+  --morganite-coral-0: #fff5f4;
+  --morganite-coral-1: #ffe5e3;
+  --morganite-coral-2: #ffcfcc;
+  --morganite-coral-3: #ffb0ab;
+  --morganite-coral-4: #fb8f8a;
+  --morganite-coral-5: #ee6f6f;
+  --morganite-coral-6: #dc4f55;
+  --morganite-coral-7: #c23a43;
+  --morganite-coral-8: #a42c36;
+  --morganite-coral-9: #7d1f28;
+  --oc-blue-0: var(--morganite-coral-0);
+  --oc-blue-1: var(--morganite-coral-1);
+  --oc-blue-2: var(--morganite-coral-2);
+  --oc-blue-3: var(--morganite-coral-3);
+  --oc-blue-4: var(--morganite-coral-4);
+  --oc-blue-5: var(--morganite-coral-5);
+  --oc-blue-6: var(--morganite-coral-6);
+  --oc-blue-7: var(--morganite-coral-7);
+  --oc-blue-8: var(--morganite-coral-8);
+  --oc-blue-9: var(--morganite-coral-7); /* Redmine colours its links with step 9 */
+  --oc-blue-1-rgb: 255, 229, 227;
+  --oc-blue-7-rgb: 194, 58, 67;
+  --oc-indigo-0: var(--morganite-coral-0);
+  --oc-indigo-1: var(--morganite-coral-1);
+  --oc-indigo-5: var(--morganite-coral-5);
+  --oc-indigo-9: var(--morganite-coral-9);
+
+  --color-top-menu-background: #fff;
+  --color-header-background: var(--morganite-page); /* the phone header uses it; the wide layout paints its own */
+
+  --morganite-page: #fff;
+  --morganite-rail: #1f1b1a;
+  --morganite-rail-ink: #d8d1cd;
+  --morganite-rail-width: 224px;
+  --morganite-radius: 10px;
 }
 
-/* 2. Dark tokens, from the system setting. Designed, not inverted: surfaces get lighter as they rise. */
-@media (prefers-color-scheme: dark) {
-  :root {
+/* 2. Dark tokens: see the one block at the end of this file. */
+
+body { color: var(--oc-gray-9); background: var(--morganite-page); }
+a:hover, a:active { color: var(--morganite-coral-8); text-decoration: underline; }
+#wrapper { background: var(--morganite-page); }
+
+/* 3. Layout shell: top bar, project header, menu, sidebar. */
+nav.top-menu {
+  background: var(--color-top-menu-background);
+  color: var(--oc-gray-6);
+  min-block-size: 44px;
+  padding-inline: 24px;
+  border-block-end: 1px solid var(--oc-gray-4);
+}
+.top-menu__links a, .top-menu__links a:link, .top-menu__links a:visited, #account .dropdown-trigger {
+  color: var(--oc-gray-7);
+  border-radius: 6px;
+  padding-block: 5px;
+  padding-inline: 10px;
+}
+.top-menu__links a:hover, #account .dropdown-trigger:hover {
+  color: var(--oc-gray-9);
+  background-color: var(--oc-gray-2);
+}
+.top-menu__links svg.icon-svg, #account .dropdown-trigger .icon-svg { stroke: var(--oc-gray-7); }
+.top-menu__links a:hover svg.icon-svg, #account .dropdown-trigger:hover .icon-svg { stroke: var(--oc-gray-9); }
+
+#header {
+  background: var(--morganite-page);
+  color: var(--oc-gray-9);
+  padding-inline: 24px;
+  border-block-end: 1px solid var(--oc-gray-4);
+}
+#header a { color: var(--oc-gray-7); }
+#header a:hover { color: var(--oc-gray-9); }
+#header h1 { font-size: 1.25rem; font-weight: 650; letter-spacing: -0.01em; }
+#header h1 .breadcrumbs { color: var(--oc-gray-6); letter-spacing: 0; }
+#quick-search #q {
+  border-radius: 999px;
+  border-color: var(--oc-gray-4);
+  background: var(--oc-gray-0);
+  padding-inline: 14px;
+  inline-size: 180px;
+  block-size: 30px;
+}
+#quick-search form label { color: var(--oc-gray-6); }
+
+/* Phones: Redmine hides the project name and shows a menu button in a 64px bar, and slides the menus in from the right on the
+ * same dark colour as the wide layout's left menu. */
+body .flyout-menu { background-color: var(--morganite-rail); }
+body .flyout-menu h3 { background-color: #2c2625; border-block-color: var(--morganite-rail); color: var(--morganite-rail-ink); }
+body #header #project-jump .drdn-trigger { color: var(--oc-gray-8); }
+body #header a.mobile-toggle-button { color: var(--oc-gray-7); }
+body #header { border-block-end: 1px solid var(--oc-gray-4); }
+
+#main-menu { background: transparent; padding-inline: 16px; }
+#main-menu li a {
+  color: var(--oc-gray-6);
+  padding-block: 9px 7px;
+  border-radius: 8px 8px 0 0;
+}
+#main-menu li a:hover { background: var(--oc-gray-1); color: var(--oc-gray-9); }
+#main-menu li a.selected, #main-menu li a.selected:hover {
+  background: transparent;
+  color: var(--oc-gray-9);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--morganite-coral-6);
+}
+#main-menu li a.new-object, #main-menu li a.new-object:hover {
+  background: var(--morganite-coral-7);
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+/* The project menu moves into a dark sidebar on wide screens, on pages that have one. Plain CSS: the header's children
+ * become grid items of the page wrapper. Narrower screens keep Redmine's own arrangement. */
+@media (min-width: 1100px) {
+  body.has-main-menu #wrapper {
+    display: grid;
+    grid-template-columns: var(--morganite-rail-width) minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "brand topbar"
+      "menu  main"
+      "menu  footer";
+    background: linear-gradient(to right, var(--morganite-rail) var(--morganite-rail-width), var(--morganite-page) var(--morganite-rail-width));
   }
+  body.has-main-menu #header { display: contents; }
+  body.has-main-menu nav.top-menu { grid-area: topbar; }
+  body.has-main-menu #header h1 {
+    grid-area: brand;
+    background: var(--morganite-rail);
+    color: #fff;
+    padding: 14px 20px;
+    min-block-size: 44px;
+    justify-content: center;
+    border-block-end: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  body.has-main-menu #header h1 .breadcrumbs, body.has-main-menu #header h1 .breadcrumbs a { color: var(--morganite-rail-ink); }
+  /* The search sits in the top bar's row, to the left of the account menu. */
+  body.has-main-menu nav.top-menu { min-block-size: 56px; }
+  body.has-main-menu #quick-search { grid-area: topbar; justify-self: end; align-self: center; margin-inline-end: 96px; min-block-size: 0; z-index: 1; }
+  body.has-main-menu #main-menu {
+    grid-area: menu;
+    position: static;
+    padding: 14px 12px;
+    background: var(--morganite-rail); /* the wrapper's gradient paints the rail too; this keeps the colour on the element itself */
+  }
+  body.has-main-menu #main-menu ul { flex-direction: column; align-items: stretch; gap: 2px; min-block-size: 0; }
+  body.has-main-menu #main-menu li { display: block; padding: 0; }
+  body.has-main-menu #main-menu li a {
+    display: block;
+    color: var(--morganite-rail-ink);
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+  body.has-main-menu #main-menu li a:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+  body.has-main-menu #main-menu li a.selected, body.has-main-menu #main-menu li a.selected:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    box-shadow: none;
+  }
+  body.has-main-menu #main-menu li:has(a#new-object) { padding: 0 0 10px; }
+  body.has-main-menu #main-menu li a.new-object, body.has-main-menu #main-menu li a.new-object:hover {
+    text-align: center;
+    background: var(--morganite-coral-7);
+    color: #fff;
+  }
+  /* Below 1300px the top bar is tight, and the sidebar already names the project, so the jump box and the label go. */
+  @media (max-width: 1299px) {
+    body.has-main-menu #quick-search #project-jump, body.has-main-menu #quick-search form label { display: none; }
+    body.has-main-menu #quick-search { margin-inline-end: 88px; }
+  }
+
+  /* The "+" menu opens to the right of the sidebar, not over the items below it. */
+  body.has-main-menu #main-menu li:has(a#new-object) { position: relative; }
+  body.has-main-menu #main-menu .menu-children {
+    inset-block-start: 0;
+    inset-inline-start: calc(100% - 4px);
+    inline-size: 220px;
+    padding: 6px;
+    border: 1px solid var(--oc-gray-3);
+    border-radius: 12px;
+    background: var(--oc-white);
+    box-shadow: 0 12px 32px rgba(35, 31, 29, 0.14);
+  }
+  body.has-main-menu #main-menu .menu-children li a {
+    color: var(--oc-gray-8);
+    background: transparent;
+    border-radius: 8px;
+    padding: 7px 10px;
+  }
+  body.has-main-menu #main-menu .menu-children li a:hover { color: var(--oc-gray-9); background: var(--oc-gray-1); }
+  body.has-main-menu #main { grid-area: main; }
+  body.has-main-menu #footer { grid-area: footer; }
 }
 
-/* 3. Layout shell: header, menus, sidebar. */
+#main { background: var(--morganite-page); }
+#content {
+  background: transparent;
+  padding-block: 28px 24px;
+  padding-inline: 28px;
+}
+#content h2 { color: var(--oc-gray-9); font-size: 1.5rem; font-weight: 650; letter-spacing: -0.01em; margin-block: 0 16px; }
+#content h3 { color: var(--oc-gray-9); font-weight: 600; }
+#sidebar { background: transparent; border-inline-start: 1px solid var(--oc-gray-3); inline-size: 232px; }
+#sidebar h3 { color: var(--oc-gray-6); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+#footer { background: transparent; border-block-start: 1px solid var(--oc-gray-3); color: var(--oc-gray-6); }
 
 /* 4. Issues: the list, the issue page, history. */
+table.list { border: 0; }
+table.list th {
+  background: transparent;
+  color: var(--oc-gray-6);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  padding-block: 10px;
+  border-block-end: 1px solid var(--oc-gray-4);
+}
+table.list th a { color: var(--oc-gray-6); }
+table.list td { padding-block: 11px; border-block-start: 1px solid var(--oc-gray-2); }
+/* No zebra stripes; a soft tint on hover instead of Redmine's yellow. */
+.box table.list:not(.odd-even) tbody tr:nth-child(even), .box .even,
+table.list:not(.odd-even) tbody tr:nth-child(odd), .odd,
+table.list:not(.odd-even) tbody tr:nth-child(even), .even { background-color: transparent; }
+table.list:not(.odd-even) tbody tr:nth-child(odd):hover, .odd:hover,
+table.list:not(.odd-even) tbody tr:nth-child(even):hover, .even:hover { background-color: var(--oc-gray-0); }
+/* The subject is ink, the ticket number carries the accent. */
+table.list td.subject a, table.list td.parent-subject a { color: var(--oc-gray-9); }
+table.list td.subject a:hover, table.list td.parent-subject a:hover { color: var(--morganite-coral-7); }
+table.list td.assigned_to a, table.list td.author a { color: var(--oc-gray-7); }
+
+/* The issue: a quiet card instead of Redmine's yellow box, and calmer headings inside the description. */
+div.issue {
+  background: var(--oc-gray-0);
+  border: 1px solid var(--oc-gray-3);
+  border-radius: 14px;
+  padding: 22px 24px;
+}
+#content div.issue div.wiki h1 { font-size: 1.3em; }
+#content div.issue div.wiki h2 { font-size: 1.15em; }
+#content div.issue div.wiki h3 { font-size: 1.02em; }
+
+/* Avatars: Redmine's orange and pink do not reach 4.5 to 1 with white text, so those two are darker. */
+.avatar-color-1 { background-color: #b4540a; }
+.avatar-color-7 { background-color: #c2255c; }
+
+/* Small fixes found by the contrast check. */
+span.badge.badge-count { background-color: var(--morganite-coral-7); }
+a.issue.tracker-2, a.issue.tracker-2:visited { color: var(--morganite-coral-7); }
+.syntaxhl .k { color: #006b00; }
 
 /* 5. Forms, buttons, flash messages, context menu, login. */
+input[type=text], input[type=password], input[type=email], input[type=number], input[type=search], input[type=date],
+input[type=url], input[type=tel], input:not([type]), select, textarea {
+  border: 1px solid var(--oc-gray-4);
+  border-radius: 8px;
+  background-color: var(--oc-white);
+  color: var(--oc-gray-9);
+  padding-inline: 10px;
+}
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=number]:focus, input[type=search]:focus,
+input[type=date]:focus, input[type=url]:focus, input:not([type]):focus, select:focus, textarea:focus {
+  outline: 3px solid var(--morganite-coral-1);
+  outline-offset: 0;
+  border-color: var(--morganite-coral-6);
+}
+input[type=submit], input[type=button], input[type=reset], button, a.button {
+  border: 1px solid var(--oc-gray-4);
+  border-radius: 8px;
+  background: var(--oc-white);
+  color: var(--oc-gray-8);
+  padding-block: 5px;
+  padding-inline: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+input[type=submit]:hover, input[type=button]:hover, input[type=reset]:hover, button:hover, a.button:hover {
+  background: var(--oc-gray-1);
+  border-color: var(--oc-gray-5);
+  text-decoration: none;
+}
+input[type=submit] {
+  background: var(--morganite-coral-7);
+  border-color: var(--morganite-coral-7);
+  color: #fff;
+}
+input[type=submit]:hover {
+  background: var(--morganite-coral-8);
+  border-color: var(--morganite-coral-8);
+}
+div.flash { border-radius: 10px; border-width: 1px; }
+#login-form {
+  background: var(--oc-white);
+  border: 1px solid var(--oc-gray-3);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 12px 40px rgba(35, 31, 29, 0.08);
+}
+#login-form a.lost_password { color: var(--morganite-coral-7); }
 
 /* 6. Everything else follows from the tokens. Fix only what is clearly broken. */
+
+/* 7. Dark, from the system setting. Supported, but not recommended: Morganite is designed in light and looks weaker in dark.
+ * Every dark rule is in this one block; delete it to keep the theme light-only. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --oc-white: #1d1819;
+    --oc-gray-0: #231d1f;
+    --oc-gray-1: #2a2325;
+    --oc-gray-2: #322a2c;
+    --oc-gray-3: #3d3436;
+    --oc-gray-4: #483e40;
+    --oc-gray-5: #a89a9d;
+    --oc-gray-6: #b8abae;
+    --oc-gray-7: #cdc2c4;
+    --oc-gray-8: #e2dadb;
+    --oc-gray-9: #f6f1f1;
+    --oc-gray-9-rgb: 246, 241, 241;
+
+    /* Links and accents are the light end of the coral ramp; buttons keep step 7 with white text. */
+    --oc-blue-0: #3a2326;
+    --oc-blue-1: #4a2a2d;
+    --oc-blue-7: var(--morganite-coral-4);
+    --oc-blue-9: var(--morganite-coral-4);
+    --oc-blue-1-rgb: 74, 42, 45;
+    --oc-blue-7-rgb: 251, 143, 138;
+
+    --color-top-menu-background: #1d1819;
+    --morganite-page: #1d1819;
+    --morganite-rail: #130f10;
+  }
+
+  a:hover, a:active { color: var(--morganite-coral-3); }
+  table.list td.subject a:hover, table.list td.parent-subject a:hover,
+  a.issue.tracker-2, a.issue.tracker-2:visited, #login-form a.lost_password { color: var(--morganite-coral-4); }
+  #login-form { box-shadow: none; }
+
+  /* Redmine paints white text with the same variable that is now a dark surface, so white text on colour is set by hand. */
+  [class*="avatar-color-"], span.badge.badge-count { color: #fff; }
+  .avatar-color-2 { color: #231f1d; }
+  span.required { color: #ff8787; }
+  a.issue.tracker-1, a.issue.tracker-1:visited { color: #ff8787; }
+
+  /* Code blocks stay light: the syntax colours are made for a light background. */
+  pre, div.wiki pre, div.pre-wrapper pre, code.syntaxhl, div.wiki code.syntaxhl, div.pre-wrapper code { background-color: #f6f3f1; color: #231f1d; }
+  .avatar-color-5 { background-color: var(--morganite-coral-7); }
+}
