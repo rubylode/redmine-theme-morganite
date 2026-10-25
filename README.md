@@ -1,20 +1,22 @@
 # Morganite for Redmine
 
-Peach and coral on white, with airy list rows and soft shadows.
+Warm neutrals and a coral accent, with all navigation in a dark sidebar.
 
-A theme for Redmine 7 and up. It is CSS only, with no script, no plugin and no change to Redmine itself. Made for light mode;
-a dark set is included but not recommended (see [Dark mode](#dark-mode)).
+A theme for Redmine 7 and up. It is CSS only, with no script, no plugin and no change to Redmine itself. Light first, with a dark set that follows your system setting (see [Dark mode](#dark-mode)).
 
-![A walk through Morganite: the project, the issue list, an issue and the new-issue form](docs/demo/walkthrough-light.gif)
+![A walk through Morganite: the issue list, an issue, the wiki, the to-do page and the new-issue form](docs/demo/walkthrough-light.gif)
 
 | | |
 |---|---|
 | ![The issue list](docs/screenshots/issues-light.png) | ![An issue](docs/screenshots/issue-light.png) |
-| ![The new issue form](docs/screenshots/new-issue-light.png) | ![The login page](docs/screenshots/login-light.png) |
+| ![The wiki](docs/screenshots/wiki-light.png) | ![The to-do page](docs/screenshots/todo-light.png) |
+| ![The project list](docs/screenshots/projects-light.png) | ![The new issue form](docs/screenshots/new-issue-light.png) |
 
-Dark mode is included but not recommended (see [Dark mode](#dark-mode)):
+Dark mode:
 
-![The issue list in dark mode](docs/screenshots/issues-dark.png)
+| | |
+|---|---|
+| ![The issue list in dark mode](docs/screenshots/issues-dark.png) | ![An issue in dark mode](docs/screenshots/issue-dark.png) |
 
 ## Contents
 
@@ -42,7 +44,7 @@ take their colours from the same variables and are fixed up as problems turn up.
 
 ## Dark mode
 
-Dark mode is supported and follows your system setting, but it is not recommended. Morganite is designed in light, and it does not look as good in dark. If you would rather the theme stayed light, delete the `@media (prefers-color-scheme: dark)` block at the end of `morganite/stylesheets/application.css`; every dark rule is in that one block.
+Dark mode follows your system setting and is part of the design, not an afterthought. If you would rather the theme stayed light, delete the `@media (prefers-color-scheme: dark)` block at the end of `morganite/stylesheets/application.css`; every dark rule is in that one block.
 
 ## Compatibility
 
@@ -60,6 +62,9 @@ npm run screenshots     # docs/screenshots
 npm run record          # docs/demo, a GIF of a walk through the pages
 ruby bin/demo reset     # wipe the demo
 ```
+
+If a copy of the Rubylode to-do plugin sits next to this repository (`../redmine-rubylode-todo`, or set `TODO_PLUGIN_PATH`), the demo mounts it and
+the check, screenshots and recording include its page. Without it they skip that page.
 
 The check fails on console errors, failed requests, sideways scrolling and text below WCAG AA contrast. `REDMINE_TAG=7.0 ruby bin/demo up`
 runs it against another Redmine version. After you change the stylesheet, run `ruby bin/demo restart` and reload: Redmine caches theme
