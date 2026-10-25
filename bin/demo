@@ -5,17 +5,23 @@
 #
 #   ruby bin/demo up        start it, load the demo data once, switch the theme on
 #   ruby bin/demo theme ID  switch to a theme folder by name, or "default" for Redmine's own look
-#   ruby bin/demo restart   restart Redmine (after adding a theme folder)
+#   ruby bin/demo restart   restart Redmine (after a stylesheet change: Redmine caches theme files until it restarts)
 #   ruby bin/demo down      stop it, keep the data
 #   ruby bin/demo reset     stop it and wipe the data
 #
 # REDMINE_TAG picks the Redmine version (7.0.2 or 7.0); the default is 7.0.2.
+# The Rubylode to-do plugin is mounted too when a copy is found, so its page shows in the screenshots and the recording.
+# It is looked for in ../redmine-rubylode-todo, or in TODO_PLUGIN_PATH. Without it the demo is the same, minus that page.
 require "json"
 require "net/http"
 
 ROOT = File.expand_path("..", __dir__)
 CONFIG = JSON.parse(File.read(File.join(ROOT, "test", "config.json")))
 READY_SECONDS = 240
+PLUGIN_PATH = File.expand_path(ENV.fetch("TODO_PLUGIN_PATH", "../redmine-rubylode-todo"), ROOT)
+OVERRIDE_FILE = File.join(ROOT, "docker-compose.override.yml")
+
+def plugin_available? = File.exist?(File.join(PLUGIN_PATH, "init.rb"))
 
 def compose(*arguments)
   system("docker", "compose", *arguments, chdir: ROOT) || abort("docker compose #{arguments.join(' ')} failed")
@@ -24,6 +30,20 @@ end
 # rails runner takes a file path or a piece of Ruby as its one argument.
 def runner(code_or_path)
   compose("exec", "-T", "redmine", "bin/rails", "runner", code_or_path)
+end
+
+# Mounts the to-do plugin through a compose override (git-ignored), or removes the override when there is no plugin.
+def write_override
+  return File.delete(OVERRIDE_FILE) if !plugin_available? && File.exist?(OVERRIDE_FILE)
+  return unless plugin_available?
+
+  File.write(OVERRIDE_FILE, <<~YAML)
+    # Written by bin/demo. Mounts the Rubylode to-do plugin so its page appears in the demo.
+    services:
+      redmine:
+        volumes:
+          - #{PLUGIN_PATH}:/usr/src/redmine/plugins/redmine_rubylode_todo:ro
+  YAML
 end
 
 def wait_until_ready
@@ -47,8 +67,14 @@ end
 
 case ARGV.first
 when "up"
+  write_override
   compose("up", "-d")
   wait_until_ready
+  if plugin_available?
+    compose("exec", "-T", "redmine", "bundle", "exec", "rake", "redmine:plugins:migrate")
+    compose("restart", "redmine")
+    wait_until_ready
+  end
   runner("/usr/src/redmine/seed.rb")
   switch_theme(CONFIG.fetch("theme"))
 when "theme"

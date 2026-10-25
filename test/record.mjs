@@ -37,7 +37,7 @@ for (const colorScheme of schemes.filter((scheme) => !onlyScheme || scheme === o
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2, { steps: 18 })
   }
 
-  // 1. The project, then its issue list.
+  // 1. The project, then its issue list from the menu.
   await page.goto(`${baseUrl}/projects/atlas`); await pause(1800)
   await glide(page.locator("#main-menu a.issues")); await page.click("#main-menu a.issues")
   await page.waitForSelector("table.issues"); await pause(1600)
@@ -46,14 +46,25 @@ for (const colorScheme of schemes.filter((scheme) => !onlyScheme || scheme === o
   await glide(page.locator("table.issues tbody tr").nth(3)); await pause(900)
   await glide(page.locator("table.issues tbody tr").nth(6)); await pause(900)
 
-  // 3. Open the first issue and scroll through it.
+  // 3. Open the showcase issue and scroll through it.
   const showcase = page.locator("table.issues td.subject a", { hasText: "Tiles near the poles" }).first()
   await glide(showcase); await showcase.click()
   await page.waitForSelector("div.issue"); await pause(1800)
-  await page.mouse.wheel(0, 500); await pause(1400)
-  await page.mouse.wheel(0, 700); await pause(1400)
+  await page.mouse.wheel(0, 500); await pause(1300)
+  await page.mouse.wheel(0, 700); await pause(1300)
 
-  // 4. The new-issue form, filled in but not sent.
+  // 4. The wiki, from the menu.
+  await page.goto(`${baseUrl}/projects/atlas`); await pause(700)
+  await glide(page.locator("#main-menu a.wiki")); await page.click("#main-menu a.wiki")
+  await page.waitForSelector("#content div.wiki:not(.wiki-preview)"); await pause(1600)
+  await page.mouse.wheel(0, 450); await pause(1300)
+
+  // 5. The to-do page, when the plugin is installed in the demo.
+  if ((await context.request.get(`${baseUrl}/projects/atlas/todo`)).ok()) {
+    await page.goto(`${baseUrl}/projects/atlas/todo`); await pause(2200)
+  }
+
+  // 6. The new-issue form, filled in but not sent.
   await page.goto(`${baseUrl}/projects/atlas/issues/new`); await pause(1200)
   await glide(page.locator("#issue_subject")); await page.click("#issue_subject")
   await page.keyboard.type("Add a scale bar to the print view", { delay: 60 }); await pause(1500)

@@ -7,7 +7,7 @@
 //   npm run check -- --scheme dark     one colour scheme
 //   npm run check -- --report-only     print everything, always exit 0
 import { mkdirSync, writeFileSync } from "node:fs"
-import { argumentValue, baseUrl, flag, launch, pages, schemes, signedInContext } from "./lib/browser.mjs"
+import { argumentValue, baseUrl, flag, launch, pages, schemes, signedInContext, skipUnavailable } from "./lib/browser.mjs"
 import { auditContrast } from "./lib/contrast.mjs"
 
 const widths = [{ name: "desktop", width: 1280, height: 800 }, { name: "phone", width: 390, height: 844 }]
@@ -24,7 +24,7 @@ for (const colorScheme of selectedSchemes) {
   for (const size of widths) {
     const signedIn = await signedInContext(browser, { colorScheme, width: size.width, height: size.height })
     const anonymous = await browser.newContext({ colorScheme, viewport: { width: size.width, height: size.height } })
-    for (const entry of selectedPages) {
+    for (const entry of await skipUnavailable(signedIn, selectedPages)) {
       const page = await (entry.signedIn ? signedIn : anonymous).newPage()
       const problems = []
       page.on("console", (message) => message.type() === "error" && problems.push(`console: ${message.text().slice(0, 160)}`))

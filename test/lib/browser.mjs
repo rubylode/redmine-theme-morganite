@@ -37,6 +37,16 @@ export async function signedInContext(browser, { colorScheme, width = 1280, heig
   return browser.newContext({ colorScheme, viewport: { width, height }, storageState, ...options })
 }
 
+// Pages marked "optional" belong to something that may not be installed (the to-do plugin). They are left out when Redmine answers
+// with an error for them, so a checkout without the plugin still passes.
+export async function skipUnavailable(context, entries) {
+  const available = []
+  for (const entry of entries) {
+    if (!entry.optional || (await context.request.get(`${baseUrl}${entry.path}`)).ok()) available.push(entry)
+  }
+  return available
+}
+
 export function argumentValue(name, fallback) {
   const index = process.argv.indexOf(`--${name}`)
   return index === -1 ? fallback : process.argv[index + 1]
