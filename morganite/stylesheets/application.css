@@ -149,69 +149,147 @@ body #header { border-block-end: 1px solid var(--oc-gray-4); }
   box-shadow: none;
 }
 
-/* The project menu moves into a dark sidebar on wide screens, on pages that have one. Plain CSS: the header's children
- * become grid items of the page wrapper. Narrower screens keep Redmine's own arrangement. */
+/* On wide screens all navigation lives in a dark left sidebar: the title, search and project jump, the general links, the project
+ * menu (or the administration menu) and, at the bottom, the profile. Plain CSS: the header's and the top menu's children become
+ * grid items of the page wrapper. Narrower screens, and the login page, keep Redmine's own arrangement. */
 @media (min-width: 1100px) {
-  body.has-main-menu #wrapper {
+  body:not(.controller-account) #wrapper {
     display: grid;
     grid-template-columns: var(--morganite-rail-width) minmax(0, 1fr);
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto auto auto auto 1fr auto;
     grid-template-areas:
-      "brand topbar"
-      "menu  main"
-      "menu  footer";
+      "brand   main"
+      "search  main"
+      "general main"
+      "menu    main"
+      "filler  main"
+      "profile footer";
     background: linear-gradient(to right, var(--morganite-rail) var(--morganite-rail-width), var(--morganite-page) var(--morganite-rail-width));
   }
-  body.has-main-menu #header { display: contents; }
-  body.has-main-menu nav.top-menu { grid-area: topbar; }
-  body.has-main-menu #header h1 {
+  body:not(.controller-account) #header, body:not(.controller-account) nav.top-menu { display: contents; }
+
+  body:not(.controller-account) #header h1 {
     grid-area: brand;
     background: var(--morganite-rail);
     color: #fff;
-    padding: 14px 20px;
-    min-block-size: 44px;
+    padding: 18px 20px 14px;
+    min-block-size: 0;
     justify-content: center;
+  }
+  body:not(.controller-account) #header h1 .breadcrumbs, body:not(.controller-account) #header h1 .breadcrumbs a { color: var(--morganite-rail-ink); }
+  body:not(.controller-account) #header h1 a { color: #fff; }
+
+  /* Search and project jump, stacked. */
+  body:not(.controller-account) #quick-search {
+    grid-area: search;
+    float: none;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    min-block-size: 0;
+    padding: 0 12px 14px;
+    background: var(--morganite-rail);
+  }
+  body:not(.controller-account) #quick-search form { display: flex; flex-direction: column; gap: 4px; margin: 0; }
+  body:not(.controller-account) #quick-search form label { margin: 0; font-size: 0.75rem; color: var(--morganite-rail-ink); opacity: 0.75; }
+  body:not(.controller-account) #quick-search form label a { color: var(--morganite-rail-ink); }
+  body:not(.controller-account) #quick-search #q {
+    inline-size: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #fff;
+  }
+  body:not(.controller-account) #quick-search #q:focus { outline-color: rgba(255, 255, 255, 0.25); border-color: rgba(255, 255, 255, 0.5); }
+  body:not(.controller-account) #project-jump.drdn { inline-size: 100%; display: block; }
+  body:not(.controller-account) #header #project-jump .drdn-trigger {
+    background-color: rgba(255, 255, 255, 0.08);
+    background-image: none;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 8px;
+    color: #fff;
+    padding-block: 6px;
+    padding-inline: 12px;
+    box-sizing: border-box;
+    inline-size: 100%;
+    block-size: auto;
+    min-block-size: 34px;
+    line-height: 1.4;
+  }
+  body:not(.controller-account) #project-jump .drdn-trigger::after { content: "\25BE"; float: inline-end; opacity: 0.7; }
+  /* The popup opens from the left edge of the rail; Redmine anchors it to the right edge, which pushes it off the page here. */
+  body:not(.controller-account) #project-jump .drdn-content {
+    z-index: 60;
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    inline-size: 280px;
+    border-radius: 10px;
+    box-shadow: 0 12px 32px rgba(35, 31, 29, 0.18);
+  }
+
+  /* General links. */
+  body:not(.controller-account) .general-menu {
+    grid-area: general;
+    padding: 4px 12px 12px;
+    background: var(--morganite-rail);
     border-block-end: 1px solid rgba(255, 255, 255, 0.08);
   }
-  body.has-main-menu #header h1 .breadcrumbs, body.has-main-menu #header h1 .breadcrumbs a { color: var(--morganite-rail-ink); }
-  /* The search sits in the top bar's row, to the left of the account menu. */
-  body.has-main-menu nav.top-menu { min-block-size: 56px; }
-  body.has-main-menu #quick-search { grid-area: topbar; justify-self: end; align-self: center; margin-inline-end: 96px; min-block-size: 0; z-index: 1; }
-  body.has-main-menu #main-menu {
-    grid-area: menu;
-    position: static;
-    padding: 14px 12px;
-    background: var(--morganite-rail); /* the wrapper's gradient paints the rail too; this keeps the colour on the element itself */
-  }
-  body.has-main-menu #main-menu ul { flex-direction: column; align-items: stretch; gap: 2px; min-block-size: 0; }
-  body.has-main-menu #main-menu li { display: block; padding: 0; }
-  body.has-main-menu #main-menu li a {
+  body:not(.controller-account) .top-menu__links ul { flex-direction: column; gap: 2px; }
+  body:not(.controller-account) .top-menu__links a, body:not(.controller-account) .top-menu__links a:link, body:not(.controller-account) .top-menu__links a:visited {
     display: block;
     color: var(--morganite-rail-ink);
     padding: 8px 12px;
     border-radius: 8px;
   }
-  body.has-main-menu #main-menu li a:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
-  body.has-main-menu #main-menu li a.selected, body.has-main-menu #main-menu li a.selected:hover {
+  body:not(.controller-account) .top-menu__links a:hover { background: rgba(255, 255, 255, 0.08); color: #fff; text-decoration: none; }
+
+  /* The profile, at the bottom of the sidebar; its dropdown opens upwards. */
+  body:not(.controller-account) .profile-menu {
+    grid-area: profile;
+    padding: 12px;
+    background: var(--morganite-rail);
+    border-block-start: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  body:not(.controller-account) #account .dropdown-trigger { color: var(--morganite-rail-ink); }
+  body:not(.controller-account) #account .dropdown-trigger:hover { color: #fff; background: rgba(255, 255, 255, 0.08); }
+  body:not(.controller-account) #account .dropdown-trigger .icon-svg { stroke: currentColor; }
+  body:not(.controller-account) #account .dropdown-content {
+    inset-block-start: auto;
+    inset-block-end: calc(100% + 8px);
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    min-inline-size: 220px;
+  }
+
+  /* The project menu. */
+  body:not(.controller-account) #main-menu {
+    grid-area: menu;
+    position: static;
+    padding: 12px 12px 14px;
+    background: var(--morganite-rail); /* the wrapper's gradient paints the rail too; this keeps the colour on the element itself */
+  }
+  body:not(.controller-account) #main-menu ul { flex-direction: column; align-items: stretch; gap: 2px; min-block-size: 0; }
+  body:not(.controller-account) #main-menu li { display: block; padding: 0; }
+  body:not(.controller-account) #main-menu li a {
+    display: block;
+    color: var(--morganite-rail-ink);
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+  body:not(.controller-account) #main-menu li a:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+  body:not(.controller-account) #main-menu li a.selected, body:not(.controller-account) #main-menu li a.selected:hover {
     background: rgba(255, 255, 255, 0.14);
     color: #fff;
     box-shadow: none;
   }
-  body.has-main-menu #main-menu li:has(a#new-object) { padding: 0 0 10px; }
-  body.has-main-menu #main-menu li a.new-object, body.has-main-menu #main-menu li a.new-object:hover {
+  body:not(.controller-account) #main-menu li:has(a#new-object) { padding: 0 0 10px; position: relative; }
+  body:not(.controller-account) #main-menu li a.new-object, body:not(.controller-account) #main-menu li a.new-object:hover {
     text-align: center;
     background: var(--morganite-coral-7);
     color: #fff;
   }
-  /* Below 1300px the top bar is tight, and the sidebar already names the project, so the jump box and the label go. */
-  @media (max-width: 1299px) {
-    body.has-main-menu #quick-search #project-jump, body.has-main-menu #quick-search form label { display: none; }
-    body.has-main-menu #quick-search { margin-inline-end: 88px; }
-  }
-
   /* The "+" menu opens to the right of the sidebar, not over the items below it. */
-  body.has-main-menu #main-menu li:has(a#new-object) { position: relative; }
-  body.has-main-menu #main-menu .menu-children {
+  body:not(.controller-account) #main-menu .menu-children {
     inset-block-start: 0;
     inset-inline-start: calc(100% - 4px);
     inline-size: 220px;
@@ -221,15 +299,43 @@ body #header { border-block-end: 1px solid var(--oc-gray-4); }
     background: var(--oc-white);
     box-shadow: 0 12px 32px rgba(35, 31, 29, 0.14);
   }
-  body.has-main-menu #main-menu .menu-children li a {
+  body:not(.controller-account) #main-menu .menu-children li a {
     color: var(--oc-gray-8);
     background: transparent;
     border-radius: 8px;
     padding: 7px 10px;
   }
-  body.has-main-menu #main-menu .menu-children li a:hover { color: var(--oc-gray-9); background: var(--oc-gray-1); }
-  body.has-main-menu #main { grid-area: main; }
-  body.has-main-menu #footer { grid-area: footer; }
+  body:not(.controller-account) #main-menu .menu-children li a:hover { color: var(--oc-gray-9); background: var(--oc-gray-1); }
+
+  body:not(.controller-account) #main { grid-area: main; }
+  body:not(.controller-account) #footer { grid-area: footer; }
+
+  /* Administration: the admin menu takes the project menu's place. Subpages keep it in the sidebar; the index keeps it in the
+   * page, so the page contents become grid items of the wrapper to put the list in the rail and the title in the main area. */
+  body:not(.controller-account):has(#admin-menu) #main { display: contents; }
+  body:not(.controller-account):has(#admin-menu) #sidebar {
+    grid-area: menu;
+    inline-size: auto;
+    padding: 12px 12px 14px;
+    border: 0;
+    background: var(--morganite-rail);
+    color: var(--morganite-rail-ink);
+  }
+  body:not(.controller-account):has(#admin-menu) #sidebar-switch-panel { display: none; }
+  body:not(.controller-account):has(#admin-menu) #sidebar h3 { color: var(--morganite-rail-ink); opacity: 0.7; padding-inline: 12px; }
+  body:not(.controller-account):has(#admin-menu) #content { grid-area: main; min-inline-size: 0; }
+  body:not(.controller-account):has(#content #admin-menu) #content { display: contents; }
+  body:not(.controller-account):has(#content #admin-menu) #content > h2 { grid-area: main; padding: 28px 28px 0; margin: 0; }
+  body:not(.controller-account):has(#content #admin-menu) #admin-menu { grid-area: menu; background: var(--morganite-rail); padding: 12px 12px 14px; }
+  #admin-menu a, #sidebar #admin-menu a {
+    display: block;
+    color: var(--morganite-rail-ink);
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+  #admin-menu a svg, #admin-menu a .icon-svg { stroke: currentColor; }
+  #admin-menu a:hover { background: rgba(255, 255, 255, 0.08); color: #fff; text-decoration: none; }
+  #admin-menu a.selected, #admin-menu a.selected:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
 }
 
 #main { background: var(--morganite-page); }
@@ -238,11 +344,32 @@ body #header { border-block-end: 1px solid var(--oc-gray-4); }
   padding-block: 28px 24px;
   padding-inline: 28px;
 }
-#content h2 { color: var(--oc-gray-9); font-size: 1.5rem; font-weight: 650; letter-spacing: -0.01em; margin-block: 0 16px; }
+#content > h2 { color: var(--oc-gray-9); font-size: 1.5rem; font-weight: 650; letter-spacing: -0.01em; margin-block: 0 16px; }
 #content h3 { color: var(--oc-gray-9); font-weight: 600; }
+/* Headings inside wiki pages and descriptions: one scale, ink coloured, below the page title. */
+.wiki h1, .wiki h2, .wiki h3, .wiki h4 { color: var(--oc-gray-9); font-weight: 650; letter-spacing: -0.01em; }
+.wiki h1 { font-size: 1.45rem; }
+.wiki h2 { font-size: 1.2rem; }
+.wiki h3 { font-size: 1.05rem; }
+.wiki table { border-collapse: collapse; }
+.wiki table th, .wiki table td { border: 1px solid var(--oc-gray-4); padding: 6px 10px; }
+.wiki table th { background: var(--oc-gray-1); }
 #sidebar { background: transparent; border-inline-start: 1px solid var(--oc-gray-3); inline-size: 232px; }
 #sidebar h3 { color: var(--oc-gray-6); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
 #footer { background: transparent; border-block-start: 1px solid var(--oc-gray-3); color: var(--oc-gray-6); }
+
+/* Administration, below the wide layout: Redmine lists the admin menu in the page on the index and in the right-hand sidebar on
+ * every other admin page, so it jumps from one side to the other. The sidebar sits on the left, where the index list is. */
+@media (max-width: 1099px) {
+  #main:has(#sidebar #admin-menu) { flex-direction: row; }
+  #main:has(#sidebar #admin-menu) #sidebar {
+    border-inline-start: 0;
+    border-inline-end: 1px solid var(--oc-gray-3);
+    padding-inline: 28px 16px;
+    inline-size: 250px;
+  }
+  #main:has(#sidebar #admin-menu) #sidebar-switch-panel { display: none; }
+}
 
 /* 4. Issues: the list, the issue page, history. */
 table.list { border: 0; }
@@ -256,12 +383,14 @@ table.list th {
 }
 table.list th a { color: var(--oc-gray-6); }
 table.list td { padding-block: 11px; border-block-start: 1px solid var(--oc-gray-2); }
-/* No zebra stripes; a soft tint on hover instead of Redmine's yellow. */
+/* Soft zebra stripes and thin column lines keep wide tables easy to follow; hover is a coral tint instead of Redmine's yellow. */
 .box table.list:not(.odd-even) tbody tr:nth-child(even), .box .even,
-table.list:not(.odd-even) tbody tr:nth-child(odd), .odd,
-table.list:not(.odd-even) tbody tr:nth-child(even), .even { background-color: transparent; }
+table.list:not(.odd-even) tbody tr:nth-child(even), .even { background-color: var(--oc-gray-1); }
+table.list:not(.odd-even) tbody tr:nth-child(odd), .odd { background-color: var(--oc-white); }
 table.list:not(.odd-even) tbody tr:nth-child(odd):hover, .odd:hover,
-table.list:not(.odd-even) tbody tr:nth-child(even):hover, .even:hover { background-color: var(--oc-gray-0); }
+table.list:not(.odd-even) tbody tr:nth-child(even):hover, .even:hover { background-color: var(--morganite-coral-0); }
+table.list > thead > tr > th + th, table.list > tbody > tr > td + td { border-inline-start: 1px solid var(--oc-gray-3); }
+table.list > tbody > tr.group > td { border-inline-start: 0; }
 /* The subject is ink, the ticket number carries the accent. */
 table.list td.subject a, table.list td.parent-subject a { color: var(--oc-gray-9); }
 table.list td.subject a:hover, table.list td.parent-subject a:hover { color: var(--morganite-coral-7); }
@@ -376,6 +505,8 @@ div.flash { border-radius: 10px; border-width: 1px; }
 
   /* Redmine paints white text with the same variable that is now a dark surface, so white text on colour is set by hand. */
   [class*="avatar-color-"], span.badge.badge-count { color: #fff; }
+  .pagination ul.pages li.current { background-color: var(--morganite-coral-7); border-color: var(--morganite-coral-7); }
+  .pagination ul.pages li.current span { color: #fff; }
   .avatar-color-2 { color: #231f1d; }
   span.required { color: #ff8787; }
   a.issue.tracker-1, a.issue.tracker-1:visited { color: #ff8787; }
