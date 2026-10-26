@@ -408,6 +408,7 @@ div.issue {
 #content div.issue div.wiki h3 { font-size: 1.02em; }
 
 /* Avatars: Redmine's orange and pink do not reach 4.5 to 1 with white text, so those two are darker. */
+.avatar-color-0 { background-color: #c92a2a; }
 .avatar-color-1 { background-color: #b4540a; }
 .avatar-color-7 { background-color: #c2255c; }
 
@@ -415,6 +416,97 @@ div.issue {
 span.badge.badge-count { background-color: var(--morganite-coral-7); }
 a.issue.tracker-2, a.issue.tracker-2:visited { color: var(--morganite-coral-7); }
 .syntaxhl .k { color: #006b00; }
+
+/* The list as a to-do list: a round check before each subject (filled and ticked when the issue is closed), sections instead of
+ * grouped table headers, and coral for what is overdue. The initials, the tracker chips and the view tabs come from one small
+ * script that only reads the page. */
+table.list td.subject::before {
+  content: "";
+  display: inline-block;
+  box-sizing: border-box;
+  inline-size: 16px;
+  block-size: 16px;
+  margin-inline-end: 8px;
+  border: 1.5px solid #b9b0aa;
+  border-radius: 50%;
+  vertical-align: -3px;
+  color: #fff;
+  font-size: 10px;
+  line-height: 13px;
+  text-align: center;
+}
+table.list tr.issue.closed td.subject::before {
+  content: "\2713";
+  background: var(--morganite-coral-7);
+  border-color: var(--morganite-coral-7);
+}
+table.list tr.issue.closed td.subject a { color: var(--oc-gray-6); }
+table.list tr.issue.overdue td.due_date { color: var(--morganite-coral-7); font-weight: 600; }
+
+table.list tr.group > td { padding-block: 18px 6px; background: var(--oc-white); border-block-start: 0; }
+table.list tr.group span.name { color: var(--oc-gray-9); font-size: 0.95rem; font-weight: 650; }
+table.list tr.group span.badge-count { background: transparent; color: var(--oc-gray-6); font-weight: 600; }
+
+.tracker-chip {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--morganite-coral-0);
+  color: #9c2b34;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.assignee-initials {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 22px;
+  block-size: 22px;
+  margin-inline-end: 6px;
+  border-radius: 50%;
+  background: #c23a43;
+  color: #fff;
+  font-size: 0.625rem;
+  font-weight: 700;
+  vertical-align: middle;
+}
+.assignee-initials.tone-1 { background: #7a4fb0; }
+.assignee-initials.tone-2 { background: #0b7a75; }
+.assignee-initials.tone-3 { background: #b4540a; }
+.assignee-initials.tone-4 { background: #2554c7; }
+.assignee-initials.tone-5 { background: #15803d; }
+/* With the initials in place the name stays for screen readers and is hidden from the eye, as the list is narrow. */
+table.list td.assigned_to a.assignee-name {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+table.list td.assigned_to { white-space: nowrap; }
+
+nav.view-tabs { display: flex; gap: 22px; margin-block: 0 14px; border-block-end: 1px solid var(--oc-gray-3); }
+nav.view-tabs a, nav.view-tabs a:visited { padding: 8px 0; color: var(--oc-gray-6); border-block-end: 2px solid transparent; margin-block-end: -1px; }
+nav.view-tabs a:hover { color: var(--oc-gray-9); text-decoration: none; }
+nav.view-tabs a.selected { color: var(--oc-gray-9); border-color: var(--morganite-coral-6); font-weight: 600; }
+
+/* Activity: a quiet date label, then a feed with hairlines. */
+div#activity h3 {
+  margin: 20px 0 4px;
+  padding: 0 0 6px;
+  background: transparent;
+  border: 0;
+  border-block-end: 1px solid var(--oc-gray-3);
+  color: var(--oc-gray-6);
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+div#activity dl { margin: 0; }
+div#activity dt { background: transparent; border: 0; padding-block: 12px 0; }
+div#activity dd { margin-block: 0; padding-block: 2px 12px; border-block-end: 1px solid var(--oc-gray-2); }
+div#activity dd .description { color: var(--oc-gray-7); }
 
 /* 5. Forms, buttons, flash messages, context menu, login. */
 input[type=text], input[type=password], input[type=email], input[type=number], input[type=search], input[type=date],
@@ -502,6 +594,10 @@ div.flash { border-radius: 10px; border-width: 1px; }
   table.list td.subject a:hover, table.list td.parent-subject a:hover,
   a.issue.tracker-2, a.issue.tracker-2:visited, #login-form a.lost_password { color: var(--morganite-coral-4); }
   #login-form { box-shadow: none; }
+  nav.view-tabs a.selected { border-color: var(--morganite-coral-4); }
+  .tracker-chip { background: #4a2a2d; color: #ffb0ab; }
+  table.list tr.issue.closed td.subject::before { background: var(--morganite-coral-7); }
+  table.list td.subject::before { border-color: #6d6264; }
 
   /* Redmine paints white text with the same variable that is now a dark surface, so white text on colour is set by hand. */
   [class*="avatar-color-"], span.badge.badge-count { color: #fff; }
