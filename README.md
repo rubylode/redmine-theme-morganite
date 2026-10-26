@@ -2,13 +2,13 @@
 
 Warm neutrals and a coral accent, with all navigation in a dark sidebar.
 
-A theme for Redmine 7 and up. It is CSS only, with no script, no plugin and no change to Redmine itself. Light first, with a dark set that follows your system setting (see [Dark mode](#dark-mode)).
+A theme for Redmine 7 and up. It is CSS plus one small script (`javascripts/theme.js`, about 70 lines), with no plugin and no change to Redmine itself. The script only reads the page: it adds initials next to assignees, a chip around the tracker name and a row of view tabs. Without it the theme still works, with plainer lists. Light first, with a dark set that follows your system setting (see [Dark mode](#dark-mode)).
 
 ![A walk through Morganite: the issue list, an issue, the wiki, the to-do page and the new-issue form](docs/demo/walkthrough-light.gif)
 
 | | |
 |---|---|
-| ![The issue list](docs/screenshots/issues-light.png) | ![An issue](docs/screenshots/issue-light.png) |
+| ![The issue list, in sections](docs/screenshots/issues-grouped-light.png) | ![An issue](docs/screenshots/issue-light.png) |
 | ![The wiki](docs/screenshots/wiki-light.png) | ![The to-do page](docs/screenshots/todo-light.png) |
 | ![The project list](docs/screenshots/projects-light.png) | ![The new issue form](docs/screenshots/new-issue-light.png) |
 
@@ -16,7 +16,7 @@ Dark mode:
 
 | | |
 |---|---|
-| ![The issue list in dark mode](docs/screenshots/issues-dark.png) | ![An issue in dark mode](docs/screenshots/issue-dark.png) |
+| ![The issue list in dark mode](docs/screenshots/issues-grouped-dark.png) | ![An issue in dark mode](docs/screenshots/issue-dark.png) |
 
 ## Contents
 

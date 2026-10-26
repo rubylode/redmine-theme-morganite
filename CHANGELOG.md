@@ -2,6 +2,17 @@
 
 All notable changes to this theme. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Added
+
+- The issue list reads as a to-do list: a round check before each subject (filled and ticked when the issue is closed), plain sections instead of grouped table headers, a chip around the tracker, round initials for the assignee, and Issues, Gantt, Calendar and Activity as underline tabs above the list. The last three come from one small script, `javascripts/theme.js`, which only reads the page.
+- Activity is a quiet feed: a small date label, then rows with hairlines.
+
+### Fixed
+
+- The red avatar colour now reaches AA contrast with white initials. The activity page is part of the page check.
+
 ## [1.0.0] - 2026-10-25
 
 ### Added
