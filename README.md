@@ -1,10 +1,10 @@
-# Morganite for Redmine
+# Rubylode Morganite for Redmine
 
 Warm neutrals and a coral accent, with all navigation in a dark sidebar.
 
 A theme for Redmine 7 and up. It is CSS plus one small script (`javascripts/theme.js`, about 70 lines), with no plugin and no change to Redmine itself. The script only reads the page: it adds initials next to assignees, a chip around the tracker name and a row of view tabs. Without it the theme still works, with plainer lists. Light first, with a dark set that follows your system setting (see [Dark mode](#dark-mode)).
 
-![A walk through Morganite: the issue list, an issue, the wiki, the to-do page and the new-issue form](docs/demo/walkthrough-light.gif)
+![A walk through Rubylode Morganite: the issue list, an issue, the wiki, the to-do page and the new-issue form](docs/demo/walkthrough-light.gif)
 
 | | |
 |---|---|
