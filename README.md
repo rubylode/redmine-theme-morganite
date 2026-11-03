@@ -1,5 +1,7 @@
 # Rubylode Morganite for Redmine
 
+<p><img src="docs/thumbnail.png" alt="Rubylode Morganite theme" width="160"></p>
+
 A theme for Redmine 7 and up: warm neutrals and a coral accent on a white page, a dark sidebar for the project menu and an issue list that reads as a to-do list.
 
 It is plain CSS plus one small script (`javascripts/theme.js`, about 170 lines), with no plugin, no build step and no change to Redmine itself. The script only reads the page. It puts a status dot beside the group name in an issue list grouped by status, gives the top bar a hairline shadow once the page scrolls, and adds three things of Morganite's own: round initials beside assignees, a chip round the tracker name and a row of view tabs above the issue list. Without the script the theme still works, with plain names and trackers and the project menu alone. It is built on the shared Rubylode theme base, so it covers the same pages as the other Rubylode themes and styles the Rubylode plugins.
