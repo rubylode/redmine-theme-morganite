@@ -1,0 +1,137 @@
+/* Rubylode Morganite, a theme for Redmine 7
+ * Copyright (C) 2026  Nick Gorbikoff
+ * GNU General Public License, version 2 or later. See the LICENSE file.
+ * Generated from the shared base of the Rubylode themes: a change made here is overwritten by the next build. */
+
+/* Morganite's own touches, the ones tokens cannot express: a sidebar that is dark in light mode, an issue list that reads as a
+ * to-do list (a round check before each subject, a chip round the tracker, round initials beside the assignee) and a row of
+ * view tabs. The chips, initials and tabs are made by extra.js; without it the list keeps plain names and trackers. */
+
+/* The sidebar is dark in both modes, so its text is set here and not from the page's ink. */
+@media screen and (min-width: 1100px) {
+  body:not(.controller-account) #header h1,
+  body:not(.controller-account):not(.has-main-menu) #header h1,
+  body:not(.controller-account) #header h1 a { color: #ffffff; }
+  body:not(.controller-account) #main-menu li a,
+  body:not(.controller-account):not(.has-main-menu):not(:has(#admin-menu)) .general-menu .top-menu__links a,
+  body:not(.controller-account):not(.has-main-menu):not(:has(#admin-menu)) .general-menu .top-menu__links a.help,
+  body:not(.controller-account):has(#admin-menu) #sidebar a,
+  #admin-menu a, #sidebar #admin-menu a { color: var(--theme-sidebar-ink); }
+  body:not(.controller-account) #main-menu li a:hover,
+  body:not(.controller-account):not(.has-main-menu):not(:has(#admin-menu)) .general-menu .top-menu__links a:hover,
+  body:not(.controller-account):has(#admin-menu) #sidebar a:hover,
+  :where(#main) #admin-menu a:hover { color: var(--theme-sidebar-ink-hover); }
+  body:not(.controller-account) #main-menu li a.selected,
+  body:not(.controller-account) #main-menu li a.selected:hover,
+  body.controller-welcome:not(.has-main-menu):not(:has(#admin-menu)) .general-menu .top-menu__links a.home,
+  body.controller-my.action-page:not(.has-main-menu):not(:has(#admin-menu)) .general-menu .top-menu__links a.my-page,
+  body:not(.controller-account):has(#admin-menu) #sidebar a.selected,
+  :where(#main) #admin-menu a.selected { color: var(--theme-sidebar-selected-ink); }
+  body:not(.controller-account) #main-menu li a.new-object,
+  body:not(.controller-account) #main-menu li a.new-object:hover { color: var(--theme-ink-on-primary); }
+  body:not(.controller-account) #main-menu .menu-children li a { color: var(--theme-ink); }
+  body:not(.controller-account) #main-menu .menu-children li a:hover { color: var(--theme-accent-8); }
+  body:not(.controller-account):has(#admin-menu) #sidebar h3 { color: var(--theme-sidebar-ink); }
+  body:not(.controller-account):has(#admin-menu) #sidebar :is(p, li, span) { color: var(--theme-sidebar-ink); }
+  #admin-menu a svg, #admin-menu a .icon-svg { stroke: currentColor; }
+  #sidebar #admin-menu a.selected, #sidebar #admin-menu a.selected:hover { background: var(--theme-sidebar-selected-background); }
+  #sidebar #admin-menu a:hover { background: var(--theme-sidebar-hover-background); }
+}
+
+/* On a phone the menus slide in from the right, on the same dark colour as the wide sidebar. */
+body .flyout-menu { background-color: var(--theme-sidebar-background); color: var(--theme-sidebar-ink); }
+body .flyout-menu a, body .flyout-menu a:link, body .flyout-menu a:visited, body .flyout-menu .icon-label { color: var(--theme-sidebar-ink); }
+body .flyout-menu a.selected, body .flyout-menu a.selected:link { color: var(--theme-sidebar-selected-ink); }
+body .flyout-menu a:hover { color: var(--theme-sidebar-ink-hover); }
+body .flyout-menu .flyout-menu__avatar { background: rgba(255, 255, 255, 0.06); }
+body .flyout-menu ul li { border-block-color: rgba(255, 255, 255, 0.1); }
+body .flyout-menu h3 { background-color: rgba(255, 255, 255, 0.06); border-block-color: var(--theme-sidebar-background); color: var(--theme-sidebar-ink); }
+
+/* The list as a to-do list: the subject is ink and the ticket number carries the accent. */
+table.list td.subject a, table.list td.parent-subject a { color: var(--theme-ink); }
+table.list td.subject a:hover, table.list td.parent-subject a:hover { color: var(--theme-link); }
+table.list tr.issue.closed td.subject a { color: var(--theme-ink-muted); }
+table.list tr.issue.overdue:not(.context-menu-selection) td.due_date { font-weight: 600; }
+
+/* A round check before each subject, filled and ticked when the issue is closed. */
+table.list.issues > tbody > tr.issue:not(.idnt) > td.subject::before {
+  content: "";
+  display: inline-block;
+  box-sizing: border-box;
+  inline-size: 1rem;
+  block-size: 1rem;
+  margin-inline-end: 8px;
+  border: 1.5px solid var(--theme-check-border);
+  border-radius: var(--theme-radius-round);
+  vertical-align: -0.2em;
+  color: var(--theme-ink-on-colour);
+  font-size: 0.6875rem;
+  line-height: 0.8125rem;
+  text-align: center;
+}
+table.list.issues > tbody > tr.issue.closed:not(.idnt) > td.subject::before {
+  content: "\2713";
+  background: var(--theme-accent-6);
+  border-color: var(--theme-accent-6);
+}
+
+/* Groups read as sections: a larger name over a hairline, with a plain count. */
+table.list > tbody > tr.group > td { padding-block: 18px 6px; border-block-end: var(--theme-border-width) var(--theme-border-style) var(--theme-line); }
+table.list tr.group span.name { font-size: 1rem; font-weight: 650; }
+table.list tr.group span.badge-count { background: transparent; color: var(--theme-ink-muted); font-weight: 600; }
+
+/* The chip round the tracker name. */
+.tracker-chip {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: var(--theme-radius-pill);
+  background: var(--theme-tracker-chip-background);
+  color: var(--theme-tracker-chip-ink);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+/* Round initials in place of the assignee's name, which stays for screen readers and in the tooltip. */
+.assignee-initials {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  margin-inline-end: 6px;
+  border-radius: var(--theme-radius-round);
+  background: var(--theme-initials-0);
+  color: var(--theme-ink-on-colour);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  vertical-align: middle;
+}
+.assignee-initials.tone-1 { background: var(--theme-initials-1); }
+.assignee-initials.tone-2 { background: var(--theme-initials-2); }
+.assignee-initials.tone-3 { background: var(--theme-initials-3); }
+.assignee-initials.tone-4 { background: var(--theme-initials-4); }
+.assignee-initials.tone-5 { background: var(--theme-initials-5); }
+table.list td.assigned_to { white-space: nowrap; }
+table.list td.assigned_to a.assignee-name {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* The tabs above the issue list: Issues, Gantt, Calendar, Activity. */
+nav.view-tabs {
+  display: flex;
+  gap: 22px;
+  margin-block: 0 14px;
+  border-block-end: var(--theme-border-width) var(--theme-border-style) var(--theme-line);
+}
+nav.view-tabs a, nav.view-tabs a:visited {
+  margin-block-end: -1px;
+  padding: 8px 0;
+  border-block-end: 2px solid transparent;
+  color: var(--theme-ink-muted);
+}
+nav.view-tabs a:hover { color: var(--theme-ink); text-decoration: none; }
+nav.view-tabs a.selected, nav.view-tabs a.selected:hover { border-color: var(--theme-accent-6); color: var(--theme-ink); font-weight: 600; }

@@ -1,0 +1,229 @@
+/* Rubylode Morganite, a theme for Redmine 7
+ * Copyright (C) 2026  Nick Gorbikoff
+ * GNU General Public License, version 2 or later. See the LICENSE file.
+ * Generated from the shared base of the Rubylode themes: a change made here is overwritten by the next build. */
+
+/* Morganite's tokens, light values. The dark values of the same names are in dark.css. */
+:root {
+  /* Surfaces: a white page and white panels, warm greys for stripes and lines. */
+  --theme-page: #ffffff;
+  --theme-surface: #ffffff;
+  --theme-surface-sunken: #f9f7f5;      /* attribute panels, journal headers, table stripes, the issue card */
+  --theme-surface-hover: #fff5f4;       /* hovered rows and menu items: a coral tint */
+  --theme-line: #e3ded9;                /* row lines and panel borders */
+  --theme-line-soft: #e7e3de;           /* column lines, chips for low priority and closed */
+  --theme-line-strong: #8a817c;         /* field borders: 3:1 against the page and the panels, as controls need */
+
+  /* Text. Warm near-black and two warm greys. */
+  --theme-ink: #231f1d;
+  --theme-ink-soft: #3a3532;
+  --theme-ink-muted: #6b635f;
+  --theme-ink-on-colour: #ffffff;
+  --theme-ink-on-light-colour: #231f1d;
+
+  /* The accent: coral, light to dark. Step 6 is the link and button colour (5.3:1 on white, so white text on it passes). */
+  --theme-accent-0: #fff5f4;
+  --theme-accent-1: #ffe5e3;
+  --theme-accent-2: #ffcfcc;
+  --theme-accent-3: #ffb0ab;
+  --theme-accent-4: #f27c7c;
+  --theme-accent-5: #dc4f55;
+  --theme-accent-6: #c23a43;
+  --theme-accent-7: #a42c36;
+  --theme-accent-8: #8a2430;
+  --theme-accent-9: #6e1b24;
+  --theme-accent-1-rgb: 255, 229, 227;
+
+  /* A peach for the text selection and the focus halo, and an amber for search highlights. */
+  --theme-secondary: #f5c4b8;
+  --theme-secondary-pale: #fff0eb;
+  --theme-tertiary: #f4b942;
+  --theme-tertiary-pale: #fdf3dc;
+  --theme-accent-pale: #fff5f4;
+
+  --theme-link: var(--theme-accent-6);
+  --theme-link-hover: var(--theme-accent-7);
+  --theme-primary: var(--theme-accent-6);
+  --theme-primary-hover: var(--theme-accent-7);
+  --theme-ink-on-primary: #ffffff;
+  --theme-primary-background: var(--theme-accent-6);
+  --theme-primary-background-hover: var(--theme-accent-7);
+  --theme-redmine-accent: var(--theme-accent-6);
+  --theme-redmine-accent-rgb: 194, 58, 67;
+  --theme-selected-tab-border-image: none;
+
+  /* The header: a white top bar with a hairline under it. */
+  --theme-header-background: #ffffff;
+  --theme-header-background-solid: #ffffff;
+  --theme-header-ink: var(--theme-ink);
+  --theme-header-link: var(--theme-ink-soft);
+  --theme-header-hover-background: #f0ede9;
+  --theme-header-line: #e3ded9;
+  --theme-header-field-background: #fcfbfa;
+  --theme-header-field-border: #8a817c;
+  --theme-mark-image: url("../images/morganite-mark.svg");
+
+  /* The sidebar is dark in light mode too: the project menu on a warm near-black. Its text colours are in flourishes.css. */
+  --theme-sidebar-width: 224px;
+  --theme-sidebar-background: #1f1b1a;
+  --theme-sidebar-line: #1f1b1a;
+  --theme-sidebar-tile: linear-gradient(135deg, #ee6f6f, #c23a43);
+  --theme-sidebar-hover-background: rgba(255, 255, 255, 0.08);
+  --theme-sidebar-selected-background: rgba(255, 255, 255, 0.14);
+  --theme-sidebar-selected-ink: #ffffff;
+  --theme-sidebar-selected-edge: transparent;
+  --theme-sidebar-ink: #d8d1cd;
+  --theme-sidebar-ink-hover: #ffffff;
+
+  /* Buttons that are not the primary: white with a warm edge. Delete buttons: a tint of red. */
+  --theme-button-background: #ffffff;
+  --theme-button-border: #8a817c;
+  --theme-button-ink: #3a3532;
+  --theme-danger-soft: #fdecea;
+  --theme-danger-soft-border: #f0b4b0;
+  --theme-danger-ink: #9b1c28;
+
+  /* Focus: a coral outline with a peach halo. */
+  --theme-focus: #dc4f55;
+  --theme-focus-halo: rgba(245, 196, 184, 0.7);
+
+  /* Meaning. Status ids in a default Redmine: 1 New, 2 In Progress, 3 Resolved, 4 Feedback, 5 Closed, 6 Rejected. */
+  --theme-status-new: #2a6fa8;
+  --theme-status-in-progress: #d98a1c;
+  --theme-status-resolved: #1f9d8a;
+  --theme-status-feedback: #8e5bb5;
+  --theme-status-closed: #2f8a4e;
+  --theme-status-rejected: #8a817c;
+  --theme-success: #2f8a4e;
+  --theme-warning: #d98a1c;
+  --theme-danger: #d6453d;
+  --theme-danger-strong: #a8323b;       /* white text on it reaches AA */
+  --theme-success-ink: #1d5a33;
+  --theme-success-soft: #e3f2e8;
+  --theme-caution-ink: #7a4f05;
+  --theme-caution-soft: #fbf2e1;
+  --theme-chip-ink-mix: #000000;
+  --theme-chip-ink-share: 60%;
+  --theme-chip-fill-share: 14%;
+
+  /* Messages, avatars, activity markers, search highlights, diffs and the Gantt chart. */
+  --theme-flash-success-background: #e7f4ec;
+  --theme-flash-success-border: #a9d3b7;
+  --theme-flash-success-ink: #1d5a33;
+  --theme-flash-warning-background: #fbf2e1;
+  --theme-flash-warning-border: #eccf95;
+  --theme-flash-warning-ink: #6f4d0b;
+  --theme-avatar-color-0: #c92a2a;
+  --theme-avatar-color-1: #b4540a;
+  --theme-avatar-color-7: #c2255c;
+  --theme-activity-edit-ink: #4b3f78;
+  --theme-activity-wiki-ink: #7a3f22;
+  --theme-search-highlight-ink: var(--theme-ink);
+  --theme-diff-removed: #fde7e9;
+  --theme-diff-added: #e1f3e6;
+  --theme-gantt-late: #e7a26b;
+  --theme-gantt-late-label: #8a4a12;
+
+  /* The script's additions: the round initials beside an assignee (six colours, white initials on each), the chip round the
+     tracker, and the round check before a subject in the list. */
+  --theme-initials-0: #c23a43;
+  --theme-initials-1: #7a4fb0;
+  --theme-initials-2: #0b7a75;
+  --theme-initials-3: #b4540a;
+  --theme-initials-4: #2554c7;
+  --theme-initials-5: #15803d;
+  --theme-tracker-chip-background: #fff5f4;
+  --theme-tracker-chip-ink: #9c2b34;
+  --theme-check-border: #b9b0aa;
+
+  /* Shape and depth: round fields, generous cards, almost no shadow. */
+  --theme-radius-highlight: 3px;
+  --theme-radius-inline: 4px;
+  --theme-radius-small: 8px;
+  --theme-radius: 10px;
+  --theme-radius-panel: 14px;
+  --theme-radius-pill: 999px;
+  --theme-radius-round: 50%;
+  --theme-border-width: 1px;
+  --theme-border-style: solid;
+  --theme-shadow-card: none;
+  --theme-shadow-popup: 0 12px 32px rgba(35, 31, 29, 0.18);
+  --theme-shadow-primary-button: none;
+  --theme-shadow-header-scrolled: 0 1px 0 rgba(35, 31, 29, 0.08);
+  --theme-space-small: 8px;
+  --theme-space: 16px;
+  --theme-space-large: 28px;
+  --theme-density: 1.1;
+  --theme-top-bar-height: 48px;
+  --theme-project-bar-height: 50px;
+
+  /* Type: the bundled Noto Sans and Noto Sans Mono (in fonts/, SIL Open Font License 1.1), the system's own fonts after them.
+     --theme-font-size is the size of running text; every other text size follows it. */
+  --theme-font-size: 16px;
+  --theme-font: "Noto Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --theme-font-monospace: "Noto Sans Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --theme-title-font: var(--theme-font);
+  --theme-title-weight: 600;
+  --theme-code-background: #f6f3f1;
+  --theme-code-ink: #231f1d;
+  --theme-syntax-keyword: #006b00;
+
+  /* Icons drawn in a stylesheet carry their colour inside the image. */
+  --theme-select-arrow-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b635f' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  --theme-search-field-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b635f' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E");
+  --theme-project-jump-arrow-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b635f' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+  /* Redmine's grey ramp (--oc-gray-0 to -9) and its white. */
+  --theme-redmine-white: #ffffff;
+  --theme-neutral-0: #fcfbfa;
+  --theme-neutral-1: #f7f5f3;
+  --theme-neutral-2: #f0ede9;
+  --theme-neutral-3: #e7e3de;
+  --theme-neutral-4: #e3ded9;
+  --theme-neutral-5: #6f6762;
+  --theme-neutral-6: #6b635f;
+  --theme-neutral-7: #544d49;
+  --theme-neutral-8: #3a3532;
+  --theme-neutral-9: #231f1d;
+  --theme-neutral-9-rgb: 35, 31, 29;
+}
+
+/* Redmine's palette, pointed at the tokens. Redmine 7 colours itself with the Open Color variables (--oc-*) and a few
+ * --color-* names, so remapping them recolours the parts of Redmine the theme does not style by hand. */
+:root {
+  --fonts-main: var(--theme-font);
+
+  --oc-white: var(--theme-redmine-white);
+  --oc-gray-0: var(--theme-neutral-0);
+  --oc-gray-1: var(--theme-neutral-1);
+  --oc-gray-2: var(--theme-neutral-2);
+  --oc-gray-3: var(--theme-neutral-3);
+  --oc-gray-4: var(--theme-neutral-4);
+  --oc-gray-5: var(--theme-neutral-5);
+  --oc-gray-6: var(--theme-neutral-6);
+  --oc-gray-7: var(--theme-neutral-7);
+  --oc-gray-8: var(--theme-neutral-8);
+  --oc-gray-9: var(--theme-neutral-9);
+  --oc-gray-9-rgb: var(--theme-neutral-9-rgb);
+
+  --oc-blue-0: var(--theme-accent-0);
+  --oc-blue-1: var(--theme-accent-1);
+  --oc-blue-2: var(--theme-accent-2);
+  --oc-blue-3: var(--theme-accent-3);
+  --oc-blue-4: var(--theme-accent-4);
+  --oc-blue-5: var(--theme-accent-5);
+  --oc-blue-6: var(--theme-accent-6);
+  --oc-blue-7: var(--theme-redmine-accent);
+  --oc-blue-8: var(--theme-accent-7);
+  --oc-blue-9: var(--theme-link); /* Redmine colours its links with step 9 */
+  --oc-blue-1-rgb: var(--theme-accent-1-rgb);
+  --oc-blue-7-rgb: var(--theme-redmine-accent-rgb);
+  --oc-indigo-0: var(--theme-accent-0);
+  --oc-indigo-1: var(--theme-accent-1);
+  --oc-indigo-2: var(--theme-accent-2);
+  --oc-indigo-5: var(--theme-accent-5);
+  --oc-indigo-9: var(--theme-accent-9);
+
+  --color-top-menu-background: var(--theme-header-background-solid);
+  --color-header-background: var(--theme-header-background-solid);
+}
