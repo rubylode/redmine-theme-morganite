@@ -2,6 +2,12 @@
 
 <p><img src="docs/thumbnail.png" alt="Rubylode Morganite theme" width="160"></p>
 
+[![check](https://img.shields.io/github/actions/workflow/status/rubylode/redmine-theme-morganite/check.yml?branch=main&label=check)](https://github.com/rubylode/redmine-theme-morganite/actions/workflows/check.yml)
+[![security](https://img.shields.io/github/actions/workflow/status/rubylode/redmine-theme-morganite/security.yml?branch=main&label=security)](https://github.com/rubylode/redmine-theme-morganite/actions/workflows/security.yml)
+[![version](https://img.shields.io/github/v/tag/rubylode/redmine-theme-morganite?sort=semver&label=version)](https://github.com/rubylode/redmine-theme-morganite/tags)
+[![license](https://img.shields.io/github/license/rubylode/redmine-theme-morganite)](https://github.com/rubylode/redmine-theme-morganite/blob/main/LICENSE)
+![Redmine](https://img.shields.io/badge/Redmine-7.0-b22222)
+
 A theme for Redmine 7 and up: warm neutrals and a coral accent on a white page, a dark sidebar for the project menu and an issue list that reads as a to-do list.
 
 It is plain CSS plus one small script (`javascripts/theme.js`, about 170 lines), with no plugin, no build step and no change to Redmine itself. The script only reads the page. It puts a status dot beside the group name in an issue list grouped by status, gives the top bar a hairline shadow once the page scrolls, and adds three things of Morganite's own: round initials beside assignees, a chip round the tracker name and a row of view tabs above the issue list. Without the script the theme still works, with plain names and trackers and the project menu alone. It is built on the shared Rubylode theme base, so it covers the same pages as the other Rubylode themes and styles the Rubylode plugins.
